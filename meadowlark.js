@@ -12,7 +12,7 @@ app.set('view engine','handlebars');
 //设置静态资源
 app.use(express.static(__dirname + '/public'));
 
-var fortunes = ['coo1','coo2','coo3','coo4'];
+var fortunes = require('./lib/fortune.js');
 
 
 //路由
@@ -21,8 +21,7 @@ app.get('/',function(req,res){
 });
 
 app.get('/about',function(req,res){
-	var randomFortune = fortunes[Math.floor(Math.random()*fortunes.length)];
-	res.render('about',{fortune: randomFortune});
+	res.render('about',{fortune: fortunes.getFortune});
 });
 
 app.use(function(req,res,next){
