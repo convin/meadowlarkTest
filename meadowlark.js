@@ -14,6 +14,11 @@ app.use(express.static(__dirname + '/public'));
 
 var fortunes = require('./lib/fortune.js');
 
+//
+app.use(function(req,res,next){
+	res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
+	next();
+});
 
 //路由
 app.get('/',function(req,res){
@@ -21,7 +26,18 @@ app.get('/',function(req,res){
 });
 
 app.get('/about',function(req,res){
-	res.render('about',{fortune: fortunes.getFortune});
+	res.render('about',{
+		fortune: fortunes.getFortune(),
+		pageTestScript:'/qa/tests-about.js'
+	});
+});
+
+app.get('/tours/hood-river',function(req,res){
+	res.render('tours/hood-river');
+});
+
+app.get('/tours/request-group-rate',function(req,res){
+	res.render('tours/request-group-rate');
 });
 
 app.use(function(req,res,next){

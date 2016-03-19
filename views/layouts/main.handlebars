@@ -1,9 +1,29 @@
 <!doctype html>
 <html>
 <head>
-	<title>Meadowlark</title>
+	<title>Meadowlark r</title>
+	{{#if showTests}}
+		<link rel="stylesheet" href="/vendor/mocha.css">
+	{{/if}}
+	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
 <body>
 	{{{body}}}
+	{{#if showTests}}
+		<div id="mocha"></div>
+		<script src="/vendor/mocha.js"></script>
+		<script src="/vendor/chai.js"></script>
+		<script>
+			mocha.ui('tdd');
+			var assert = chai.assert;
+		</script>
+		<script src="/qa/tests-global.js"></script>
+		{{#if pageTestScript}}
+			<script src="{{pageTestScript}}"></script>
+		{{/if}}
+		<script>
+			mocha.run();
+		</script>
+	{{/if}}
 </body>
 </html>
